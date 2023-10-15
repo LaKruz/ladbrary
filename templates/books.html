@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}
+  Книги
+{% endblock %}
+{% block main %}
+  <main>
+    <form action="{% url 'search' %}" method="get">
+      <input name="q" type="text" placeholder="Поиск..." />
+    </form>
+    {% if user.is_authenticated %}
+    <form action="{% url 'book_add'%}" method="get">
+      {% csrf_token %}
+      <input type="submit" value="Добавить"></input>
+    </form>
+  {% endif %}
+    <h1>Книги</h1>
+    {% for book in books %}
+      <a href="{{ book.get_absolute_url }}">
+        <h3>{{ book.author }} - {{ book.name }} ({{ book.publish_year }})</h3>
+        <img src="{{ book.cover.url }}" alt="" height="300">
+      </a>
+    {% endfor %}
+    {% include "pagination.html" with page=page_obj %}
+  </main>
+{% endblock %}

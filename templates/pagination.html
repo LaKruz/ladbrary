@@ -1,0 +1,18 @@
+<br>
+<hr>
+<span>
+  {% if page.has_previous %}
+    <a href="?{{ request.GET.urlencode }}&page={{ page.previous_page_number }}">Назад</a>
+  {% endif %}
+  <span>{{ page.number }} из {{ page.paginator.num_pages }}</span>
+  {% if page.has_next %}
+    <a href="?{{ request.GET.urlencode }}&page={{ page.next_page_number }}">Далее</a>
+  {% endif %}
+</span>
+
+
+{% comment %} {% if page_obj.has_next %}
+<!-- https://stackoverflow.com/questions/52007038/pagination-using-listview-and-a-dynamic-filtered-queryset -->
+<a href="?{{ request.GET.urlencode }}&page={{ page_obj.next_page_number }}">next</a>
+<a href="?{{ request.GET.urlencode }}&page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+{% endif %} {% endcomment %}

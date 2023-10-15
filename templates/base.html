@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      {% block title %}
+        Заголовок
+      {% endblock %}
+    </title>
+  </head>
+  <body>
+    <header>
+      <table>
+        <tr>
+          <a href="{% url 'books' %}">Книги</a>‎ 
+      {% if user.is_authenticated %}
+        User: {{ user.get_username }}
+        
+          <a href="{% url 'logout' %}?next={% url 'books' %}">Разлогин</a>‎ 
+        
+      {% else %}
+        
+          <a href="{% url 'login' %}">Логин</a>‎ 
+          <a href="{% url 'registration' %}">Регистрация</a>‎ 
+        
+      {% endif %}
+      
+        
+      
+    </tr>
+      </table>
+    </header>
+    {% block main %}
+
+    {% endblock %}
+  </body>
+</html>

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}
+  Результаты поиска
+{% endblock %}
+{% block main %}
+  <form action="{% url 'search' %}" method="get">
+    <input name="q" type="text" placeholder="Поиск..." />
+  </form>
+  <h1>Результаты поиска</h1>
+  <ul>
+    {% for book in book_list %}
+      <li>
+        <a href="{{ book.get_absolute_url }}">{{ book.name }}</a>
+      </li>
+    {% endfor %}
+  </ul>
+  {% include "pagination.html" with page=page_obj %}
+{% endblock %}

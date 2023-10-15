@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load ratings %}
+{% block title %}
+  {{ book.name }}
+{% endblock %}
+{% block main %}
+  <link rel="stylesheet" href="{% static 'star-ratings/css/star-ratings.css' %}">
+  <main>
+    {% if user.is_authenticated %}
+      <form action="{% url 'book_delete' book.pk %}" method="get">
+        {% csrf_token %}
+        <input type="submit" value="Удалить"></input>
+      </form>
+      <form action="{% url 'book_edit' book.pk %}" method="get">
+        {% csrf_token %}
+        <input type="submit" value="Изменить"></input>
+      </form>
+    {% endif %}
+    <h1>{{ book.author }} - {{ book.name }} ({{ book.publish_year }})</h1>
+    {% ratings book %}
+    <br>
+    <img src="{{ book.cover.url }}" alt="" height="500">
+    <p>{{ book.synopsys }}</p>
+    {% if user.is_authenticated %}
+        <h2>Добавить комментарий</h2>
+        <form action="" method="post">
+            {% csrf_token %}
+            <input type="text" name="comment">
+            <input type="submit" value="Опубликовать"></input>
+        </form>
+    {% endif %}
+    <h2>Комментарии</h2>
+    <hr>
+    {% for comment in comments %}
+        <p><b>{{ comment.user }}</b></p>
+        <p>{{ comment.text }}</p>
+        <p>{{ comment.published }}</p>
+    {% endfor %}
+  </main>
+  <script type="text/javascript" src="{% static 'star-ratings/js/dist/star-ratings.min.js' %}"></script>
+{% endblock %}
